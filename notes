@@ -5,7 +5,18 @@ Go will handle all high level stuff, Computer Vision, mapping exc
 Arduino will get motor command from Go, and return physical sensor data.
 The arduino will also react to physical sensors, i.e stop going forward if we hit something
 
-to uC ->    motor1 int,motor2 int     neg is backward   range -100 to 100 (percent speed)
-            "45,45" or "-10,10"
-from uC->   bump1 bool,bump2 bool,bump3 bool,bump4 bool, sonar1 int,sonar2 int
-            "F,F,F,F,10,15"
+Communication will be with json
+
+
+to uC ->  {"motor1":50,"motor2":50,"redLED":0,"greenLED":3}
+from uC->   {"bump1":False,"bump2":False,"bump3":False,"bump4":False,"sonar1":15,"sonar2":20,
+
+RPI will talk direct to GPS,
+uC may also have 9 axis sensor
+
+
+
+
+
+we have a decision channel
+
