@@ -7,10 +7,8 @@ import (
 
 type App struct {
 	//main token to pass around
-	curMotor  *motorPair
 	stale     int  //number of ms we concider a messge to be stale and not process it.
 	collision bool //have we just hit something?  Processing and movements will be slower if this has happened
-	curSensor *sensorData
 	lastPrint time.Time
 	/*
 		brain will store whatever interface we are currently using.
@@ -21,12 +19,12 @@ type App struct {
 	brain           navLogic
 	primaryDecision *motorPair
 	serialConnected bool
+	veh             vehicle
 }
 
 func (self *App) setup() {
 	self.stale = 50 //ms
-	self.curMotor = new(motorPair)
-	self.curSensor = new(sensorData)
+	self.veh = new(fakeVehical)
 	self.collision = false
 	self.lastPrint = time.Now()
 	self.brain = new(bumpLogic)
@@ -47,8 +45,6 @@ func (self *App) printApp() {
 	fmt.Printf("Stale setting(ms): %d\n", self.stale)
 	fmt.Printf("In Collision State: %t\n", self.collision)
 	fmt.Println("Current Motor Settings:")
-	self.curMotor.printMotor()
-	fmt.Printf("Sensor Data: %s\n", self.curSensor.raw)
 	fmt.Printf("Nav Type: %s\n", self.brain.showType())
 	fmt.Println("Primary Decision:")
 	self.primaryDecision.printMotor()

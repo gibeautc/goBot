@@ -5,17 +5,34 @@ import (
 	"time"
 )
 
-type location struct {
-	id  int     //for OSM style mapping
-	lat float32 //global cords
-	lon float32
-	x   int //local cords
-	y   int
-}
-
 type navLogic interface {
 	decide(app *App) (*motorPair, error)
 	showType() string
+}
+
+type vehicle interface {
+	move(drive int, turn int)
+	getScan() []ScanData
+	sendJson(cmd string)
+	getJson() string
+}
+
+type Node struct {
+	id    int
+	osmId int
+	lat   float64
+	lon   float64
+	x     int //local cords
+	y     int
+}
+
+type Way struct {
+	nodes []Node
+}
+
+type ScanData struct {
+	angle    int
+	distance int
 }
 
 type motorPair struct {
@@ -31,11 +48,6 @@ func (self *motorPair) printMotor() {
 	} else {
 		fmt.Println("Motor Pair is Null")
 	}
-}
-
-type sensorData struct {
-	raw  string
-	time time.Time
 }
 
 func stop() *motorPair {
