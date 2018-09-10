@@ -24,7 +24,7 @@ type App struct {
 
 func (self *App) setup() {
 	self.stale = 50 //ms
-	self.veh = new(fakeVehical)
+	self.veh = NewFakeVehical()
 	self.collision = false
 	self.lastPrint = time.Now()
 	self.brain = new(bumpLogic)
@@ -48,4 +48,8 @@ func (self *App) printApp() {
 	fmt.Printf("Nav Type: %s\n", self.brain.showType())
 	fmt.Println("Primary Decision:")
 	self.primaryDecision.printMotor()
+}
+
+func (self *App) run() {
+
 }
